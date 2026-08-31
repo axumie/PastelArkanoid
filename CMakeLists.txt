@@ -25,14 +25,17 @@ add_custom_command(
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/Engine/FramebufferVS.hlsl
 )
 
+# windows target
+add_compile_definitions(_WIN32_WINNT=0x0A00)
+
 # Збираємо всі файли з кодом
-file(GLOB SOURCES "Engine/*.cpp" "Engine/*.h" "Engine/*.rc")
+file(GLOB SOURCES "Engine/Source files/*.cpp" "Engine/Header files/*.h" "Engine/*.rc")
 
 # Створюємо програму та додаємо згенеровані шейдери як залежність
 add_executable(FartAnnoyed WIN32 ${SOURCES} ${PS_SHH} ${VS_SHH})
 
 # Вказуємо компілятору, де шукати згенеровані файли .shh
-target_include_directories(FartAnnoyed PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(FartAnnoyed PRIVATE "Engine/Header files" "Engine/Source files" ${CMAKE_SOURCE_DIR} "XAudio" ${CMAKE_CURRENT_BINARY_DIR})
 
 # Підключаємо системні бібліотеки для вікна та DirectX
-target_link_libraries(FartAnnoyed d3d11 d3dcompiler user32 gdi32)
+target_link_libraries(FartAnnoyed d3d11 d3dcompiler user32 gdi32 xaudio2)
