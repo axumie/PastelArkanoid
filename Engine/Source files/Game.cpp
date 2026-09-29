@@ -43,6 +43,6 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	brick.DrawBrick(gfx);
+	brick.Draw(gfx);
 	ball.Draw(gfx);
 }

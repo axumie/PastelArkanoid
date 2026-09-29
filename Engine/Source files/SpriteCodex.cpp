@@ -1,4 +1,32 @@
 #include "SpriteCodex.h"
+#include "Colors.h"
+
+namespace
+{
+	unsigned char AddColor(unsigned char value, int amount)
+	{
+		int result = int(value) + amount;
+
+		if (result > 255)
+		{
+			result = 255;
+		}
+
+		return (unsigned char)result;
+	}
+
+	unsigned char SubtractColor(unsigned char value, int amount)
+	{
+		int result = int(value) - amount;
+
+		if (result < 0)
+		{
+			result = 0;
+		}
+
+		return (unsigned char)result;
+	}
+}
 
 void SpriteCodex::DrawBall(const Vec2 &center, Graphics &gfx)
 {
@@ -153,4 +181,115 @@ void SpriteCodex::DrawBall(const Vec2 &center, Graphics &gfx)
 	gfx.PutPixel(6 + x, 13 + y, 48, 48, 48);
 	gfx.PutPixel(7 + x, 13 + y, 48, 48, 48);
 	gfx.PutPixel(8 + x, 13 + y, 48, 48, 48);
+}
+
+void SpriteCodex::DrawBrick(const Vec2 &topLeft, Color color, Graphics &gfx)
+{
+	const int x = int(topLeft.x);
+	const int y = int(topLeft.y);
+
+	const Color light(
+		AddColor(color.GetR(), 60),
+		AddColor(color.GetG(), 60),
+		AddColor(color.GetB(), 60));
+
+	const Color highlight(
+		AddColor(color.GetR(), 100),
+		AddColor(color.GetG(), 100),
+		AddColor(color.GetB(), 100));
+
+	const Color shadow(
+		SubtractColor(color.GetR(), 50),
+		SubtractColor(color.GetG(), 50),
+		SubtractColor(color.GetB(), 50));
+
+	const Color darkShadow(
+		SubtractColor(color.GetR(), 100),
+		SubtractColor(color.GetG(), 100),
+		SubtractColor(color.GetB(), 100));
+
+	const Color outline(48, 48, 48);
+
+	// ============================================================
+	// OUTLINE
+	// ============================================================
+
+	for (int px = 2; px < 46; ++px)
+	{
+		gfx.PutPixel(x + px, y + 0, outline);
+		gfx.PutPixel(x + px, y + 1, outline);
+		gfx.PutPixel(x + px, y + 12, outline);
+		gfx.PutPixel(x + px, y + 13, outline);
+	}
+
+	for (int py = 2; py < 12; ++py)
+	{
+		gfx.PutPixel(x + 0, y + py, outline);
+		gfx.PutPixel(x + 1, y + py, outline);
+		gfx.PutPixel(x + 46, y + py, outline);
+		gfx.PutPixel(x + 47, y + py, outline);
+	}
+
+	// ============================================================
+	// MAIN BODY
+	// ============================================================
+
+	for (int py = 2; py < 12; ++py)
+	{
+		for (int px = 2; px < 46; ++px)
+		{
+			gfx.PutPixel(x + px, y + py, color);
+		}
+	}
+
+	// ============================================================
+	// BRIGHT UPPER EDGE
+	// ============================================================
+
+	for (int px = 3; px < 45; ++px)
+	{
+		gfx.PutPixel(x + px, y + 2, highlight);
+		gfx.PutPixel(x + px, y + 3, light);
+	}
+
+	// Bright left edge
+	for (int py = 4; py < 11; ++py)
+	{
+		gfx.PutPixel(x + 2, y + py, light);
+		gfx.PutPixel(x + 3, y + py, light);
+	}
+
+	// ============================================================
+	// SPECULAR HIGHLIGHT
+	// ============================================================
+
+	for (int px = 6; px < 28; ++px)
+	{
+		gfx.PutPixel(x + px, y + 4, highlight);
+	}
+
+	for (int px = 8; px < 24; ++px)
+	{
+		gfx.PutPixel(x + px, y + 5, highlight);
+	}
+
+	// ============================================================
+	// LOWER SHADOW
+	// ============================================================
+
+	for (int px = 3; px < 45; ++px)
+	{
+		gfx.PutPixel(x + px, y + 10, shadow);
+		gfx.PutPixel(x + px, y + 11, darkShadow);
+	}
+
+	// ============================================================
+	// RIGHT SHADOW
+	// ============================================================
+
+	for (int py = 4; py < 11; ++py)
+	{
+		gfx.PutPixel(x + 44, y + py, shadow);
+		gfx.PutPixel(x + 45, y + py, darkShadow);
+	}
 }
