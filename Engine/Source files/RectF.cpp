@@ -29,3 +29,8 @@ RectF RectF::CreateFromCenter(const Vec2 &center_in, float halfwidth_in, float h
     return RectF(Vec2(center_in.x - halfwidth_in, center_in.y - halfheight_in),
                  Vec2(center_in.x + halfwidth_in, center_in.y + halfheight_in));
 }
+
+RectF RectF::GetRect() const
+{
+    return *this;
+}
