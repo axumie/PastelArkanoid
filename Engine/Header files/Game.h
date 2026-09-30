@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include "Brick.h"
 #include "Ball.h"
+#include "Paddle.h"
 
 class Game
 {
@@ -45,4 +46,5 @@ private:
 	Graphics gfx;
 	Brick brick;
 	Ball ball;
+	Paddle paddle;
 };

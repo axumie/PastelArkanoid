@@ -25,7 +25,8 @@ Game::Game(MainWindow &wnd)
 	: wnd(wnd),
 	  gfx(wnd),
 	  brick(50.0f, 80.0f, 50.0f, 150.0f, Colors::Red),
-	  ball(Vec2(400.0f, 500.0f))
+	  ball(Vec2(400.0f, 490.0f)),
+	  paddle(RectF(580.0f, 590.0f, 350.0f, 450.0f), Vec2(350.0f, 500.0f))
 {
 }
 
@@ -45,4 +46,5 @@ void Game::ComposeFrame()
 {
 	brick.Draw(gfx);
 	ball.Draw(gfx);
+	paddle.Draw(gfx);
 }
