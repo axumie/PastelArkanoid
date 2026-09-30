@@ -24,9 +24,9 @@
 Game::Game(MainWindow &wnd)
 	: wnd(wnd),
 	  gfx(wnd),
-	  brick(50.0f, 80.0f, 50.0f, 150.0f, Colors::Red),
-	  ball(Vec2(400.0f, 490.0f)),
-	  paddle(RectF(580.0f, 590.0f, 350.0f, 450.0f), Vec2(350.0f, 500.0f))
+	  brick(Vec2(50.0f, 80.0f), Colors::Red),
+	  ball(Vec2(395.0f, 495.0f)),
+	  paddle(Vec2(350.0f, 500.0f))
 {
 }
 
@@ -40,6 +40,16 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	if (wnd.kbd.KeyIsPressed(VK_LEFT))
+	{
+		paddle.rect.left -= 3.0f;
+		ball.SetCenter(ball.GetCenter() - Vec2(3.0f, 0.0f));
+	}
+	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	{
+		paddle.rect.left += 3.0f;
+		ball.SetCenter(ball.GetCenter() + Vec2(3.0f, 0.0f));
+	}
 }
 
 void Game::ComposeFrame()

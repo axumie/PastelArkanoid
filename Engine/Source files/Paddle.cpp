@@ -1,10 +1,11 @@
 #include "Paddle.h"
 
-Paddle::Paddle(const RectF &rect_in, const Vec2 &position_in) : rect(rect_in), position(position_in)
+Paddle::Paddle(const Vec2 &topleft_in)
 {
+    rect = RectF(topleft_in, width, height);
 }
 
 void Paddle::Draw(Graphics &gfx) const
 {
-    SpriteCodex::DrawPaddle(position, gfx);
+    SpriteCodex::DrawPaddle(Vec2(rect.left, rect.top), gfx);
 }

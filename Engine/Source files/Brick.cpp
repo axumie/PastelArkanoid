@@ -1,8 +1,8 @@
 #include "Brick.h"
 #include "SpriteCodex.h"
 
-Brick::Brick(float top, float bottom, float left, float right, const Color &color_in)
-    : rect(top, bottom, left, right), color(color_in), isDestroyed(false)
+Brick::Brick(const Vec2 &topleft_in, const Color &color_in)
+    : rect(topleft_in, width, height), color(color_in), isDestroyed(false)
 {
 }
 

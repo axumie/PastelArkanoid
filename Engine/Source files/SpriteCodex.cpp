@@ -28,7 +28,7 @@ namespace
 		return (unsigned char)result;
 	}
 }
-
+// 14x14 ball
 void SpriteCodex::DrawBall(const Vec2 &center, Graphics &gfx)
 {
 	const int x = int(center.x) - 7;
@@ -183,7 +183,7 @@ void SpriteCodex::DrawBall(const Vec2 &center, Graphics &gfx)
 	gfx.PutPixel(7 + x, 13 + y, 55, 35, 65);
 	gfx.PutPixel(8 + x, 13 + y, 55, 35, 65);
 }
-
+// 60 x 18 brick
 void SpriteCodex::DrawBrick(const Vec2 &topLeft, Color color, Graphics &gfx)
 {
 	const int x = int(topLeft.x);
@@ -334,7 +334,7 @@ void SpriteCodex::DrawBrick(const Vec2 &topLeft, Color color, Graphics &gfx)
 		gfx.PutPixel(x + 57, y + py, darkShadow);
 	}
 }
-
+// 90 x 10 paddle
 void SpriteCodex::DrawPaddle(const Vec2 &topLeft, Graphics &gfx)
 {
 	const int x = int(topLeft.x);

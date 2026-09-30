@@ -5,10 +5,11 @@
 class Paddle
 {
 public:
-    Paddle(const RectF &rect_in, const Vec2 &position_in);
+    Paddle(const Vec2 &topleft_in);
     void Draw(Graphics &gfx) const;
 
 public:
     RectF rect;
-    Vec2 position;
+    float width = 90.0f;
+    float height = 10.0f;
 };
