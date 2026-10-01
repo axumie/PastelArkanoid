@@ -9,8 +9,9 @@ class Brick
 public:
     Brick(const Vec2 &topleft_in, const Color &color_in);
     void Draw(Graphics &gfx) const;
+    RectF GetRect() const;
 
-public:
+private:
     Color color;
     RectF rect;
     float width = 60.0f;

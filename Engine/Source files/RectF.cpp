@@ -30,6 +30,18 @@ RectF RectF::CreateFromCenter(const Vec2 &center_in, float halfwidth_in, float h
                  Vec2(center_in.x + halfwidth_in, center_in.y + halfheight_in));
 }
 
+bool RectF::IsOverLapping(const RectF &other) const
+{
+    if (right > other.left && left < other.right && bottom > other.top && top < other.bottom)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 RectF RectF::GetRect() const
 {
     return *this;

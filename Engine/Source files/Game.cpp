@@ -42,13 +42,20 @@ void Game::UpdateModel()
 {
 	if (wnd.kbd.KeyIsPressed(VK_LEFT))
 	{
-		paddle.rect.left -= 3.0f;
-		ball.SetCenter(ball.GetCenter() - Vec2(3.0f, 0.0f));
+		paddle.Move(-3.0f);
 	}
 	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
 	{
-		paddle.rect.left += 3.0f;
-		ball.SetCenter(ball.GetCenter() + Vec2(3.0f, 0.0f));
+		paddle.Move(3.0f);
+	}
+
+	if (paddle.GetRect().left < 0.0f)
+	{
+		paddle.SetTopLeft(Vec2(0.0f, paddle.GetRect().top));
+	}
+	if (paddle.GetRect().right >= gfx.ScreenWidth)
+	{
+		paddle.SetTopLeft(Vec2(gfx.ScreenWidth - paddle.GetWidth() - 1, paddle.GetRect().top));
 	}
 }
 

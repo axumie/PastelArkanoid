@@ -2,6 +2,7 @@
 
 Ball::Ball(const Vec2 &center_in) : center(center_in)
 {
+    rect.CreateFromCenter(center, radius, radius);
 }
 
 void Ball::Draw(Graphics &gfx) const
@@ -18,4 +19,9 @@ Vec2 Ball::SetCenter(const Vec2 &newCenter)
 Vec2 Ball::GetCenter() const
 {
     return center;
+}
+
+RectF Ball::GetRect() const
+{
+    return rect;
 }

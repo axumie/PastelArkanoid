@@ -13,3 +13,8 @@ void Brick::Draw(Graphics &gfx) const
         SpriteCodex::DrawBrick(Vec2(rect.left, rect.top), color, gfx);
     }
 }
+
+RectF Brick::GetRect() const
+{
+    return rect;
+}
