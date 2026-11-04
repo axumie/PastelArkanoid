@@ -613,3 +613,129 @@ void SpriteCodex::DrawPaddle(const Vec2 &topLeft, Graphics &gfx)
 	gfx.PutPixel(x + 41, y + 8, bodyLight);
 	gfx.PutPixel(x + 42, y + 8, bodyLight);
 }
+
+void SpriteCodex::DrawBackground(Graphics &gfx)
+{
+	// =========================================================
+	// DEEP NIGHT SKY GRADIENT (DARK BLUE)
+	// =========================================================
+	for (int y = 0; y < Graphics::ScreenHeight; ++y)
+	{
+		const unsigned char r = (unsigned char)(8 + (12 * y) / Graphics::ScreenHeight);
+		const unsigned char g = (unsigned char)(12 + (20 * y) / Graphics::ScreenHeight);
+		const unsigned char b = (unsigned char)(28 + (32 * y) / Graphics::ScreenHeight);
+		const Color skyColor(r, g, b);
+
+		for (int x = 0; x < Graphics::ScreenWidth; ++x)
+		{
+			gfx.PutPixel(x, y, skyColor);
+		}
+	}
+
+	// =========================================================
+	// STARFIELD PALETTE
+	// =========================================================
+	const Color faintStar(85, 105, 150);
+	const Color brightStar(175, 195, 230);
+
+	const Color sparkleCenter(245, 248, 255);
+	const Color sparkleArm(115, 140, 190);
+
+	const Color bigSparkleCenter(255, 255, 255);
+	const Color bigSparkleInner(185, 210, 245);
+	const Color bigSparkleOuter(95, 120, 170);
+	const Color bigSparkleDiag(80, 105, 155);
+
+	// Star layout: x, y, type
+	// type: 0 = faint (1px), 1 = bright (1px), 2 = small sparkle (3x3), 3 = large sparkle (5x5)
+	struct Star
+	{
+		int x;
+		int y;
+		int type;
+	};
+
+	static const Star stars[] = {
+		// Large sparkles
+		{ 120, 85, 3 }, { 680, 110, 3 }, { 420, 210, 3 }, { 240, 360, 3 }, { 710, 330, 3 },
+
+		// Small sparkles (3x3 cross)
+		{ 65, 140, 2 }, { 190, 70, 2 }, { 310, 130, 2 }, { 510, 95, 2 }, { 620, 190, 2 },
+		{ 750, 80, 2 }, { 85, 280, 2 }, { 290, 250, 2 }, { 460, 340, 2 }, { 580, 290, 2 },
+		{ 160, 440, 2 }, { 370, 430, 2 }, { 640, 420, 2 }, { 730, 470, 2 }, { 490, 480, 2 },
+
+		// Bright stars (1px)
+		{ 35, 50, 1 }, { 95, 110, 1 }, { 150, 160, 1 }, { 210, 95, 1 }, { 260, 180, 1 },
+		{ 340, 65, 1 }, { 385, 145, 1 }, { 445, 80, 1 }, { 480, 160, 1 }, { 540, 130, 1 },
+		{ 595, 60, 1 }, { 650, 140, 1 }, { 705, 175, 1 }, { 765, 130, 1 }, { 780, 45, 1 },
+		{ 45, 210, 1 }, { 135, 250, 1 }, { 180, 310, 1 }, { 225, 230, 1 }, { 275, 310, 1 },
+		{ 330, 330, 1 }, { 390, 275, 1 }, { 430, 380, 1 }, { 525, 240, 1 }, { 560, 360, 1 },
+		{ 615, 330, 1 }, { 670, 260, 1 }, { 725, 280, 1 }, { 770, 350, 1 }, { 55, 380, 1 },
+		{ 110, 460, 1 }, { 205, 410, 1 }, { 255, 490, 1 }, { 315, 450, 1 }, { 410, 480, 1 },
+		{ 465, 520, 1 }, { 535, 450, 1 }, { 600, 500, 1 }, { 660, 475, 1 }, { 715, 530, 1 },
+		{ 760, 520, 1 }, { 130, 540, 1 }, { 280, 550, 1 }, { 360, 540, 1 }, { 630, 560, 1 },
+
+		// Faint stars (1px)
+		{ 20, 90, 0 }, { 75, 40, 0 }, { 140, 80, 0 }, { 175, 130, 0 }, { 230, 50, 0 },
+		{ 285, 110, 0 }, { 320, 170, 0 }, { 365, 40, 0 }, { 405, 115, 0 }, { 460, 45, 0 },
+		{ 500, 180, 0 }, { 555, 85, 0 }, { 580, 155, 0 }, { 635, 40, 0 }, { 675, 95, 0 },
+		{ 720, 60, 0 }, { 745, 160, 0 }, { 790, 105, 0 }, { 30, 165, 0 }, { 80, 230, 0 },
+		{ 115, 195, 0 }, { 165, 220, 0 }, { 210, 275, 0 }, { 250, 200, 0 }, { 305, 290, 0 },
+		{ 355, 225, 0 }, { 415, 320, 0 }, { 475, 285, 0 }, { 510, 360, 0 }, { 545, 310, 0 },
+		{ 590, 230, 0 }, { 645, 295, 0 }, { 690, 220, 0 }, { 740, 240, 0 }, { 785, 290, 0 },
+		{ 40, 330, 0 }, { 90, 360, 0 }, { 145, 390, 0 }, { 195, 350, 0 }, { 235, 440, 0 },
+		{ 270, 400, 0 }, { 335, 400, 0 }, { 380, 365, 0 }, { 440, 440, 0 }, { 485, 410, 0 },
+		{ 520, 510, 0 }, { 570, 440, 0 }, { 610, 410, 0 }, { 675, 390, 0 }, { 705, 440, 0 },
+		{ 750, 395, 0 }, { 785, 460, 0 }, { 30, 490, 0 }, { 85, 520, 0 }, { 170, 505, 0 },
+		{ 220, 530, 0 }, { 300, 510, 0 }, { 345, 490, 0 }, { 430, 545, 0 }, { 495, 560, 0 },
+		{ 550, 545, 0 }, { 585, 530, 0 }, { 665, 540, 0 }, { 740, 565, 0 }, { 775, 570, 0 }
+	};
+
+	// Draw stars
+	for (const auto &star : stars)
+	{
+		const int sx = star.x;
+		const int sy = star.y;
+
+		switch (star.type)
+		{
+		case 0: // Faint 1px star
+			gfx.PutPixel(sx, sy, faintStar);
+			break;
+
+		case 1: // Bright 1px star
+			gfx.PutPixel(sx, sy, brightStar);
+			break;
+
+		case 2: // Small 3x3 sparkle cross
+			gfx.PutPixel(sx, sy, sparkleCenter);
+			gfx.PutPixel(sx - 1, sy, sparkleArm);
+			gfx.PutPixel(sx + 1, sy, sparkleArm);
+			gfx.PutPixel(sx, sy - 1, sparkleArm);
+			gfx.PutPixel(sx, sy + 1, sparkleArm);
+			break;
+
+		case 3: // Large 5x5 diamond sparkle
+			gfx.PutPixel(sx, sy, bigSparkleCenter);
+
+			// Inner cross
+			gfx.PutPixel(sx - 1, sy, bigSparkleInner);
+			gfx.PutPixel(sx + 1, sy, bigSparkleInner);
+			gfx.PutPixel(sx, sy - 1, bigSparkleInner);
+			gfx.PutPixel(sx, sy + 1, bigSparkleInner);
+
+			// Diagonal glow
+			gfx.PutPixel(sx - 1, sy - 1, bigSparkleDiag);
+			gfx.PutPixel(sx + 1, sy - 1, bigSparkleDiag);
+			gfx.PutPixel(sx - 1, sy + 1, bigSparkleDiag);
+			gfx.PutPixel(sx + 1, sy + 1, bigSparkleDiag);
+
+			// Outer tips
+			gfx.PutPixel(sx - 2, sy, bigSparkleOuter);
+			gfx.PutPixel(sx + 2, sy, bigSparkleOuter);
+			gfx.PutPixel(sx, sy - 2, bigSparkleOuter);
+			gfx.PutPixel(sx, sy + 2, bigSparkleOuter);
+			break;
+		}
+	}
+}

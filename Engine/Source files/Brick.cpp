@@ -2,8 +2,9 @@
 #include "SpriteCodex.h"
 
 Brick::Brick(const Vec2 &topleft_in, const Color &color_in)
-    : rect(topleft_in, width, height), color(color_in), isDestroyed(false)
+    : color(color_in), isDestroyed(false)
 {
+    rect = RectF(topleft_in, width, height);
 }
 
 void Brick::Draw(Graphics &gfx) const

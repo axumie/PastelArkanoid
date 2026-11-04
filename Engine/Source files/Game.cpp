@@ -20,6 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "SpriteCodex.h"
 
 Game::Game(MainWindow &wnd)
 	: wnd(wnd),
@@ -80,12 +81,27 @@ void Game::UpdateModel()
 		{
 			ball.ReflectBallX();
 		}
+
+		if (ball.GetRect().IsOverLapping(paddle.GetRect()))
+		{
+			ball.ReflectBallY();
+		}
+	}
+
+	if (!brick.isDestroyed && ball.GetRect().IsOverLapping(brick.GetRect()))
+	{
+		brick.isDestroyed = true;
+		ball.ReflectBallY();
 	}
 }
 
 void Game::ComposeFrame()
 {
-	brick.Draw(gfx);
+	SpriteCodex::DrawBackground(gfx);
+	if (!brick.isDestroyed)
+	{
+		brick.Draw(gfx);
+	}
 	ball.Draw(gfx);
 	paddle.Draw(gfx);
 }
