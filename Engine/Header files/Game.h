@@ -47,4 +47,6 @@ private:
 	Brick brick;
 	Ball ball;
 	Paddle paddle;
+
+	bool BallisAttached = true;
 };

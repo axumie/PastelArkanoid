@@ -10,14 +10,8 @@ public:
     void Move(float dx);
     void SetTopLeft(const Vec2 &topleft_in);
     RectF GetRect() const;
-    float GetWidth() const
-    {
-        return width;
-    }
-    float GetHeight() const
-    {
-        return height;
-    }
+    float GetWidth() const;
+    float GetHeight() const;
 
 private:
     RectF rect;

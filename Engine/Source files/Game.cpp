@@ -48,7 +48,6 @@ void Game::UpdateModel()
 	{
 		paddle.Move(3.0f);
 	}
-
 	if (paddle.GetRect().left < 0.0f)
 	{
 		paddle.SetTopLeft(Vec2(0.0f, paddle.GetRect().top));
@@ -56,6 +55,31 @@ void Game::UpdateModel()
 	if (paddle.GetRect().right >= gfx.ScreenWidth)
 	{
 		paddle.SetTopLeft(Vec2(gfx.ScreenWidth - paddle.GetWidth() - 1, paddle.GetRect().top));
+	}
+
+	if (BallisAttached)
+	{
+		const float PaddleCenterX = paddle.GetRect().left + (paddle.GetWidth() / 2.0f);
+		const float BallY = paddle.GetRect().top - ball.GetRadius();
+
+		ball.SetCenter(Vec2(PaddleCenterX, BallY));
+		if (wnd.kbd.KeyIsPressed(VK_UP))
+		{
+			ball.Setdir(Vec2(1.0f, -1.0f));
+			BallisAttached = false;
+		}
+	}
+	else
+	{
+		ball.Update();
+		if (ball.GetRect().top <= 0.5f || ball.GetRect().bottom >= gfx.ScreenHeight - 0.5f)
+		{
+			ball.ReflectBallY();
+		}
+		if (ball.GetRect().left <= 2.0f || ball.GetRect().right >= gfx.ScreenWidth - 0.5f)
+		{
+			ball.ReflectBallX();
+		}
 	}
 }
 

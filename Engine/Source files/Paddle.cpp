@@ -30,3 +30,13 @@ RectF Paddle::GetRect() const
 {
     return rect;
 }
+
+float Paddle::GetWidth() const
+{
+    return width;
+}
+
+float Paddle::GetHeight() const
+{
+    return height;
+}
