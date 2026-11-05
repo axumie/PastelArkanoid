@@ -345,8 +345,36 @@ Sound::Sound(const std::wstring &fileName, LoopType loopType,
 	{
 		{
 			std::ifstream file;
+
+			// Extract just the filename (e.g. arkpad.wav) to try common relative folders
+			const size_t slashPos = fileName.find_last_of(L"/\\");
+			const std::wstring baseName = (slashPos != std::wstring::npos) ? fileName.substr(slashPos + 1) : fileName;
+
+			const std::wstring candidates[] = {
+				fileName,
+				L"Sounds/" + baseName,
+				L"Engine/Sounds/" + baseName,
+				L"../Engine/Sounds/" + baseName,
+				L"../../Engine/Sounds/" + baseName};
+
+			bool opened = false;
+			for (const auto &path : candidates)
+			{
+				file.open(path, std::ios::binary);
+				if (file.is_open() && !file.fail())
+				{
+					opened = true;
+					break;
+				}
+				file.clear();
+			}
+
+			if (!opened)
+			{
+				throw CHILI_SOUND_FILE_EXCEPTION(fileName, L"File not found (tried current folder, Sounds/, Engine/Sounds/, and ../Engine/Sounds/)");
+			}
+
 			file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-			file.open(fileName, std::ios::binary);
 
 			{
 				BYTE fourcc[4];

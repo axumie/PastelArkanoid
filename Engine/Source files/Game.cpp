@@ -107,6 +107,7 @@ void Game::UpdateModel()
 		if (ball.GetVelocity().y > 0.0f && ball.GetRect().IsOverLapping(paddle.GetRect()))
 		{
 			ball.ReflectBallY();
+			padSound.Play();
 		}
 	}
 
@@ -116,6 +117,7 @@ void Game::UpdateModel()
 		{
 			brick.isDestroyed = true;
 			ball.ReflectBallY();
+			brickSound.Play();
 			break;
 		}
 	}

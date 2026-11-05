@@ -22,6 +22,7 @@
 
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "Sound.h"
 #include "Graphics.h"
 #include "Brick.h"
 #include "Ball.h"
@@ -48,6 +49,9 @@ private:
 	std::vector<Brick> bricks;
 	Ball ball;
 	Paddle paddle;
+
+	Sound padSound = Sound(L"Sounds/arkpad.wav");
+	Sound brickSound = Sound(L"Sounds/arkbrick.wav");
 
 	bool BallisAttached = true;
 };
