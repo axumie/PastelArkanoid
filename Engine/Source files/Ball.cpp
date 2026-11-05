@@ -20,6 +20,11 @@ float Ball::GetRadius() const
     return radius;
 }
 
+Vec2 Ball::GetVelocity() const
+{
+    return vel;
+}
+
 void Ball::ReflectBallX()
 {
     vel.x = -vel.x;
@@ -30,10 +35,9 @@ void Ball::ReflectBallY()
     vel.y = -vel.y;
 }
 
-Vec2 Ball::SetCenter(const Vec2 &newCenter)
+void Ball::SetCenter(const Vec2 &newCenter)
 {
     center = newCenter;
-    return center;
 }
 
 void Ball::Setdir(const Vec2 &dir)

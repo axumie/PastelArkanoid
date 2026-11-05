@@ -104,7 +104,7 @@ void Game::UpdateModel()
 			ball.ReflectBallX();
 		}
 
-		if (ball.GetRect().IsOverLapping(paddle.GetRect()))
+		if (ball.GetVelocity().y > 0.0f && ball.GetRect().IsOverLapping(paddle.GetRect()))
 		{
 			ball.ReflectBallY();
 		}

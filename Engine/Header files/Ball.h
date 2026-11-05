@@ -12,13 +12,14 @@ public:
     Ball(const Vec2 &center_in);
     void Draw(Graphics &gfx) const;
     void Update();
-    float GetRadius() const;
     void ReflectBallX();
     void ReflectBallY();
-    Vec2 SetCenter(const Vec2 &newCenter);
+    void SetCenter(const Vec2 &newCenter);
     void Setdir(const Vec2 &dir);
     Vec2 GetCenter() const;
     RectF GetRect() const;
+    float GetRadius() const;
+    Vec2 GetVelocity() const;
 
 private:
     Vec2 center;
