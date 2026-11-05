@@ -14,7 +14,7 @@ public:
 
 private:
     Color color;
-    static constexpr float width = 60.0f;
-    static constexpr float height = 18.0f;
+    static constexpr float width = 70.0f;
+    static constexpr float height = 25.0f;
     RectF rect;
 };

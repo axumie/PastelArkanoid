@@ -26,6 +26,7 @@
 #include "Brick.h"
 #include "Ball.h"
 #include "Paddle.h"
+#include "vector"
 
 class Game
 {
@@ -44,7 +45,7 @@ private:
 private:
 	MainWindow &wnd;
 	Graphics gfx;
-	Brick brick;
+	std::vector<Brick> bricks;
 	Ball ball;
 	Paddle paddle;
 

@@ -25,10 +25,32 @@
 Game::Game(MainWindow &wnd)
 	: wnd(wnd),
 	  gfx(wnd),
-	  brick(Vec2(50.0f, 80.0f), Colors::Red),
 	  ball(Vec2(395.0f, 495.0f)),
 	  paddle(Vec2(350.0f, 500.0f))
 {
+	const int nBricksRow = 10;
+	const int nBricksCol = 7;
+	const float brickWidth = 70.0f;
+	const float brickHeight = 25.0f;
+	const Vec2 startpos(45.0f, 10.0f);
+
+	const Color colColors[] = {
+		Colors::MakeRGB(115, 65, 245),
+		Colors::MakeRGB(125, 120, 255),
+		Colors::MakeRGB(235, 75, 215),
+		Colors::MakeRGB(245, 130, 245),
+		Colors::MakeRGB(255, 160, 220),
+		Colors::MakeRGB(255, 185, 175),
+		Colors::MakeRGB(255, 210, 160)};
+
+	for (int j = 0; j < nBricksCol; ++j)
+	{
+		for (int i = 0; i < nBricksRow; ++i)
+		{
+			const Vec2 pos(startpos.x + i * brickWidth + 2.0f, startpos.y + j * brickHeight + 2.0f);
+			bricks.emplace_back(pos, colColors[j]);
+		}
+	}
 }
 
 void Game::Go()
@@ -88,20 +110,29 @@ void Game::UpdateModel()
 		}
 	}
 
-	if (!brick.isDestroyed && ball.GetRect().IsOverLapping(brick.GetRect()))
+	for (auto &brick : bricks)
 	{
-		brick.isDestroyed = true;
-		ball.ReflectBallY();
+		if (!brick.isDestroyed && ball.GetRect().IsOverLapping(brick.GetRect()))
+		{
+			brick.isDestroyed = true;
+			ball.ReflectBallY();
+			break;
+		}
 	}
 }
 
 void Game::ComposeFrame()
 {
 	SpriteCodex::DrawBackground(gfx);
-	if (!brick.isDestroyed)
+
+	for (const auto &brick : bricks)
 	{
-		brick.Draw(gfx);
+		if (!brick.isDestroyed)
+		{
+			brick.Draw(gfx);
+		}
 	}
+
 	ball.Draw(gfx);
 	paddle.Draw(gfx);
 }

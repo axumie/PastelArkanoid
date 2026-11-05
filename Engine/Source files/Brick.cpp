@@ -11,7 +11,7 @@ void Brick::Draw(Graphics &gfx) const
 {
     if (!isDestroyed)
     {
-        SpriteCodex::DrawBrick(Vec2(rect.left, rect.top), color, gfx);
+        SpriteCodex::DrawBrick(Vec2(rect.left, rect.top), width, height, color, gfx);
     }
 }
 
